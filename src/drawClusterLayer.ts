@@ -8,7 +8,7 @@ import {
   SymbolLayer,
 } from "maplibre-gl";
 import { ClusterOptions } from "./types";
-import { COLOR_WHITE, MARKER_COLOR, MAP_STYLES } from "./constants";
+import { COLOR_WHITE, MARKER_COLOR } from "./constants";
 import { isGeoJsonSource } from "./utils";
 import { FONT_DEFAULT_BY_STYLE } from "./constants";
 
@@ -31,8 +31,7 @@ export function drawClusterLayer(
     showCount,
     clusterCountLayout,
     fontColor = COLOR_WHITE,
-  }: ClusterOptions,
-  mapStyle?: MAP_STYLES
+  }: ClusterOptions
 ): { clusterLayerId: string; clusterSymbolLayerId: string } {
   const clusterLayerId = `${sourceName}-layer-clusters`;
   const clusterSymbolLayerId = `${sourceName}-layer-cluster-count`;
@@ -108,11 +107,18 @@ export function drawClusterLayer(
       "text-size": 24,
     };
 
-    const locationServicesStyle = mapStyle || Geo.getDefaultMap().style;
-    if (locationServicesStyle) {
-      defaultLayoutOptions["text-font"] = [
-        FONT_DEFAULT_BY_STYLE[locationServicesStyle],
-      ];
+    try {
+      const locationServicesStyle = Geo.getDefaultMap().style;
+      if (locationServicesStyle) {
+        defaultLayoutOptions["text-font"] = [
+          FONT_DEFAULT_BY_STYLE[locationServicesStyle],
+        ];
+      }
+    } catch (e) {
+      if ((e.message as string).includes("No map resources"))
+        console.debug(
+          "No Geo DefaultMap style found, not setting default text-font"
+        );
     }
 
     const layoutOptions = { ...defaultLayoutOptions, ...clusterCountLayout };
