@@ -95,7 +95,7 @@
     "maplibre-gl": "^1.15.2"
   },
   "dependencies": {
-    "@mapbox/mapbox-gl-draw": "^1.3.0",
+    "@mapbox/mapbox-gl-draw": "1.1.1",
     "@maplibre/maplibre-gl-geocoder": "^1.3.0",
     "@turf/along": "^6.5.0",
     "@turf/circle": "^6.5.0",
@@ -104,6 +104,8 @@
     "@turf/length": "^6.5.0",
     "@turf/line-slice": "^6.5.0",
     "debounce": "^1.2.1",
-    "maplibre-gl-draw-circle": "^0.0.1"
+    "fs": "npm:empty-npm-package@1.0.0",
+    "maplibre-gl-draw-circle": "^0.0.1",
+    "path": "npm:empty-npm-package@1.0.0"
   }
 }
